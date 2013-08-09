@@ -41,10 +41,10 @@ class TestUnloanableItem(unittest.TestCase):
         self.assertFalse(self.item.loanable)
 
     def test_loan_method_fails_for_unloanable_items(self):
-        self.assertRaises(UnloanableException, self.item.loan())
+        self.assertRaises(UnloanableException, self.item.loan)
 
     def test_collect_method_fails_for_unloaned_items(self):
-        self.assertRaises(NotLoanedException, self.item.collect())
+        self.assertRaises(NotLoanedException, self.item.collect)
 
 
 class TestBook(unittest.TestCase):

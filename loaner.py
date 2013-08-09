@@ -5,13 +5,12 @@ Tracks items loaned out to friends
 """
 
 
-def except_unloanable(func):
-    def inner(self, *args, **kwargs):
-        if not self.loanable:
-            raise TypeError('This item cannot be loaned.')
-        else:
-            return func(self, *args, **kwargs)
-    return inner
+class UnloanableException(Exception):
+    pass
+
+
+class NotLoanedException(Exception):
+    pass
 
 
 class Item(object):
@@ -20,14 +19,16 @@ class Item(object):
         self.loanable = loanable
         self.loaned = False
 
-    @except_unloanable
     def loan(self, borrower=None, date=datetime.datetime.now()):
+        if not self.loanable:
+            raise UnloanableException('Item cannot be loaned.')
         self.loaned = True
         self.borrower = borrower
         self.loan_date = date
 
-    @except_unloanable
     def collect(self, borrower=None, date=datetime.datetime.now()):
+        if not self.loaned:
+            raise NotLoanedException('This item is not currently loaned out.')
         self.loaned = False
         self.return_date = date
 

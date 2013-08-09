@@ -1,7 +1,7 @@
 import unittest
 import random
 import datetime
-from loaner import Item, Book, Game, VideoGame
+from loaner import Item, Book, Game, VideoGame, UnloanableException, NotLoanedException
 
 
 class TestItem(unittest.TestCase):
@@ -26,6 +26,7 @@ class TestItem(unittest.TestCase):
         self.assertEqual(self.item.loan_date, self.loan_date)
 
     def test_sets_return_date(self):
+        self.item.loan()
         self.return_date = datetime.datetime.now()
         self.item.collect(date=self.return_date)
         self.assertEqual(self.item.return_date, self.return_date)
@@ -40,10 +41,10 @@ class TestUnloanableItem(unittest.TestCase):
         self.assertFalse(self.item.loanable)
 
     def test_loan_method_fails_for_unloanable_items(self):
-        self.assertRaises(TypeError, self.item.loan())
+        self.assertRaises(UnloanableException, self.item.loan())
 
-    def test_collect_method_fails_for_unloanable_items(self):
-        self.assertRaises(TypeError, self.item.collect())
+    def test_collect_method_fails_for_unloaned_items(self):
+        self.assertRaises(NotLoanedException, self.item.collect())
 
 
 class TestBook(unittest.TestCase):

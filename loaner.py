@@ -5,11 +5,11 @@ Tracks items loaned out to friends
 """
 
 
-class UnloanableException(Exception):
+class UnloanableError(Exception):
     pass
 
 
-class NotLoanedException(Exception):
+class NotLoanedError(Exception):
     pass
 
 
@@ -21,14 +21,14 @@ class Item(object):
 
     def loan(self, borrower=None, date=datetime.datetime.now()):
         if not self.loanable:
-            raise UnloanableException('Item cannot be loaned.')
+            raise UnloanableError('Item cannot be loaned.')
         self.loaned = True
         self.borrower = borrower
         self.loan_date = date
 
     def collect(self, borrower=None, date=datetime.datetime.now()):
         if not self.loaned:
-            raise NotLoanedException('This item is not currently loaned out.')
+            raise NotLoanedError('This item is not currently loaned out.')
         self.loaned = False
         self.return_date = date
 

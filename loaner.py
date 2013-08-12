@@ -35,8 +35,8 @@ class Item(object):
 
 class Book(Item):
 
-    def __init__(self, pages, cover):
-        super(Item, self).__init__()
+    def __init__(self, pages, cover, loanable=True):
+        Item.__init__(self, loanable)
         self.pages = pages
         self.cover = cover
 
@@ -46,8 +46,8 @@ class Book(Item):
 
 class Game(Item):
 
-    def __init__(self, players):
-        super(Item, self).__init__()
+    def __init__(self, players, loanable=True):
+        Item.__init__(self, loanable)
         self.players = players
 
     def mark_completed(self):
@@ -56,6 +56,6 @@ class Game(Item):
 
 class VideoGame(Game):
 
-    def __init__(self, players, platform):
-        super(Game, self).__init__()
+    def __init__(self, players, platform, loanable=True):
+        Game.__init__(self, players, loanable)
         self.platform = platform

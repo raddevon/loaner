@@ -47,44 +47,44 @@ class TestUnloanableItem(unittest.TestCase):
         self.assertRaises(NotLoanedError, self.item.collect)
 
 
-class TestBook(unittest.TestCase):
+class TestBook(TestItem):
 
     def setUp(self):
         self.pages = random.randint(50, 1000)
         self.cover = 'hardcover'
-        self.book = Book(self.pages, self.cover)
+        self.item = Book(self.pages, self.cover)
 
     def test_pages_set_in_constructor(self):
-        self.assertEqual(self.book.pages, self.pages)
+        self.assertEqual(self.item.pages, self.pages)
 
     def test_cover_set_in_constructor(self):
-        self.assertEqual(self.book.cover, self.cover)
+        self.assertEqual(self.item.cover, self.cover)
 
     def test_mark_read_sets_read_variable(self):
-        self.book.mark_read()
-        self.assertTrue(self.book.read)
+        self.item.mark_read()
+        self.assertTrue(self.item.read)
 
 
-class TestGame(unittest.TestCase):
+class TestGame(TestItem):
 
     def setUp(self):
         self.players = random.randint(1, 8)
-        self.game = Game(self.players)
+        self.item = Game(self.players)
 
     def test_players_set_in_constructor(self):
-        self.assertEqual(self.game.players, self.players)
+        self.assertEqual(self.item.players, self.players)
 
     def test_mark_completed_sets_completed_variable(self):
-        self.game.mark_completed()
-        self.assertTrue(self.game.completed)
+        self.item.mark_completed()
+        self.assertTrue(self.item.completed)
 
 
-class TestVideoGame(unittest.TestCase):
+class TestVideoGame(TestGame):
 
     def setUp(self):
         self.players = random.randint(1, 8)
         self.platform = 'Xbox 360'
-        self.game = VideoGame(self.players, self.platform)
+        self.item = VideoGame(self.players, self.platform)
 
     def test_platform_set_in_constructor(self):
-        self.assertEqual(self.game.platform, self.platform)
+        self.assertEqual(self.item.platform, self.platform)
